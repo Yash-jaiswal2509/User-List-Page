@@ -35,3 +35,11 @@ export interface ValidationErrors {
   marital_status?: string;
   submit?: string;
 }
+
+export interface CardComponentProps {
+  editingUser: User | null;
+  setEditingUser: (value: User | null) => void;
+  user: User;
+  handleEditUser: (user: User) => void;
+  deleteUser: (username: string) => void;
+}
