@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Users, Moon, Sun } from 'lucide-react';
+import { Search, Moon, Sun } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import {
