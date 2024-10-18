@@ -15,7 +15,7 @@ import { UserTableProps } from "@/types/types"
 export const UserTable = ({ users, editingUser, setEditingUser, handleEditUser, deleteUser }: UserTableProps) => {
     return (
         <Table>
-            <TableHeader className="bg-[#f9fafb]">
+            <TableHeader className="bg-[#f4f9ff]">
                 <TableRow>
                     <TableHead className="text-center">Name</TableHead>
                     <TableHead className="text-center">Username</TableHead>

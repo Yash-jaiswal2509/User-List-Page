@@ -49,8 +49,8 @@ export const useUsers = (): UseUsersReturn => {
   const updateUser = (updatedUser: User) => {
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
-        user.username === updatedUser.username ? updatedUser : user
-      )
+        user.username === updatedUser.username ? updatedUser : user,
+      ),
     );
   };
 
@@ -58,7 +58,7 @@ export const useUsers = (): UseUsersReturn => {
   // "Filter" only returns when the condition is true => When the username doesn't matches, it is kept in the array
   const deleteUser = (username: string) => {
     setUsers((prevUsers) =>
-      prevUsers.filter((user) => user.username !== username)
+      prevUsers.filter((user) => user.username !== username),
     );
   };
 

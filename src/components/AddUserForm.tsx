@@ -51,6 +51,7 @@ const AddUserForm = ({ newUser, setNewUser, setIsAddingUser, onSubmit }: AddUser
 
         try {
             setIsSubmitting(true);
+            // setTimeout(() => {}, 1000);
             onSubmit();
         } catch (error) {
             setErrors({

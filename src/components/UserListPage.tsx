@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Plus, Loader, Search } from 'lucide-react';
+import { Plus, Loader } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useUsers } from "./hooks/useUsers";
 import { User } from '@/types/types';
 import AddUserForm from './AddUserForm';
 import { UserTable } from './UserTable';
+import Header from './Header';
 
 const UserListPage = () => {
     // Custom hook to fetch users data and manage CRUD operations
@@ -28,20 +28,17 @@ const UserListPage = () => {
     });
 
     // Filter users based on search term and display filtered users
-    // It is filtering based on first name, last name, username and marital status
     const filteredUsers = users.filter(user =>
         `${user.first_name} ${user.last_name}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.marital_status.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Function: handleAddUser to handle adding new user
     const handleAddUser = () => {
         if (!newUser.first_name || !newUser.last_name || !newUser.username) {
             return;
         }
 
-        // created a complete user object
         const completeUser: User = {
             first_name: newUser.first_name,
             last_name: newUser.last_name,
@@ -65,13 +62,11 @@ const UserListPage = () => {
         setIsAddingUser(false);
     };
 
-    // Function: handleEditUser to handle editing user
     const handleEditUser = (user: User) => {
         updateUser(user);
         setEditingUser(null);
     };
 
-    // Loading state with spinning loader
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -80,7 +75,6 @@ const UserListPage = () => {
         );
     }
 
-    // Error state with alert
     if (error) {
         return (
             <Alert variant="destructive" className="m-4">
@@ -90,45 +84,45 @@ const UserListPage = () => {
     }
 
     return (
-        <div className="container mx-auto p-4 max-w-6xl">
-            <Card className="mb-6">
-                <CardHeader>
-                    <CardTitle className="text-2xl font-bold">User Directory</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    {/* Search and Add User */}
-                    <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
-                            <Input
-                                placeholder="Search users..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-8"
-                            />
+        <div className="min-h-screen flex flex-col">
+            <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <div className="container mx-auto p-4 max-w-6xl flex-1">
+                <Card className="mb-6">
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary font-bold">User Directory</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {/* Add User Button */}
+                        <div className="mb-6">
+                            <Button
+                                onClick={() => setIsAddingUser(true)}
+                                className="flex items-center gap-2"
+                            >
+                                <Plus className="w-4 h-4" /> Add User
+                            </Button>
                         </div>
-                        <Button
-                            onClick={() => setIsAddingUser(true)}
-                            className="flex items-center gap-2"
-                        >
-                            <Plus className="w-4 h-4" /> Add User
-                        </Button>
-                    </div>
 
-                    {/* Add User Form */}
-                    {isAddingUser && (
-                        <AddUserForm
-                            newUser={newUser}
-                            setNewUser={setNewUser}
-                            setIsAddingUser={setIsAddingUser}
-                            onSubmit={handleAddUser}
+                        {/* Add User Form */}
+                        {isAddingUser && (
+                            <AddUserForm
+                                newUser={newUser}
+                                setNewUser={setNewUser}
+                                setIsAddingUser={setIsAddingUser}
+                                onSubmit={handleAddUser}
+                            />
+                        )}
+
+                        {/* User List Table */}
+                        <UserTable 
+                            users={filteredUsers} 
+                            editingUser={editingUser} 
+                            setEditingUser={setEditingUser} 
+                            deleteUser={deleteUser} 
+                            handleEditUser={handleEditUser} 
                         />
-                    )}
-
-                    {/* User List Table */}
-                    <UserTable users={filteredUsers} editingUser={editingUser} setEditingUser={setEditingUser} deleteUser={deleteUser} handleEditUser={handleEditUser} />
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 };
