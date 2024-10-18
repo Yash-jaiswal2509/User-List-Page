@@ -1,3 +1,9 @@
+export interface UrlQueryParams {
+  params: string;
+  key: string;
+  value: string;
+}
+
 export interface User {
   age: number;
   first_name: string;
@@ -23,6 +29,14 @@ export interface AddUserFormProps {
   setNewUser: (value: User | {}) => void;
   setIsAddingUser: (value: boolean) => void;
   onSubmit: () => void;
+}
+
+export interface UserTableProps {
+  users: User[];
+  editingUser: User | null;
+  setEditingUser: (value: User | null) => void;
+  deleteUser: (username: string) => void;
+  handleEditUser: (user: User) => void;
 }
 
 export interface ValidationErrors {

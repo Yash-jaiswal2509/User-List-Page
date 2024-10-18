@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useUsers } from "./hooks/useUsers";
 import { User } from '@/types/types';
 import AddUserForm from './AddUserForm';
-import CardComponent from './CardComponent';
+import { UserTable } from './UserTable';
 
 const UserListPage = () => {
     // Custom hook to fetch users data and manage CRUD operations
@@ -125,18 +125,8 @@ const UserListPage = () => {
                         />
                     )}
 
-                    {/* User List */}
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {filteredUsers.map(user => (
-                            <CardComponent
-                                key={user.username}
-                                editingUser={editingUser}
-                                setEditingUser={setEditingUser}
-                                user={user}
-                                handleEditUser={handleEditUser}
-                                deleteUser={deleteUser} />
-                        ))}
-                    </div>
+                    {/* User List Table */}
+                    <UserTable users={filteredUsers} editingUser={editingUser} setEditingUser={setEditingUser} deleteUser={deleteUser} handleEditUser={handleEditUser} />
                 </CardContent>
             </Card>
         </div>
